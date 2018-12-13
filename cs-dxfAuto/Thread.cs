@@ -1017,12 +1017,14 @@ namespace cs_dxfAuto
 
                         fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x35C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
                         fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//0299D8D0    B0 01           mov al,0x1                        mov al,0x1
+																								   //029B6880    B0 01           mov al,0x1
 
 
-                    }
+
+					}
 
 
-                    while (!IsBossDie())
+					while (!IsBossDie())
                     {
                         ////fun.KeyPress((Int32)Keys.Space);
 

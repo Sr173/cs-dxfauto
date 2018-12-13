@@ -232,8 +232,8 @@ namespace CallTool {
             at.push(0);
             at.push(code);
             at.mov_ecx(addr);
-            at.mov_eax(0x0276A360);//0276A360    55              push ebp
-            at.call_eax();
+            at.mov_eax(0x0276A350);//0276A350    55              push ebp
+			at.call_eax();
             at.popad();
             at.retn();
             at.RunRempteThreadWithMainThread();
@@ -2522,8 +2522,8 @@ namespace CallTool {
             at.push(1);
             at.push_esi();
             at.push(0x3E);
-            at.mov_ecx(0x57C3B50);
-            at.mov_eax(0x032C8880);//032951B0    55              push ebp
+            at.mov_ecx(0x57C5B50);
+            at.mov_eax(0x032C9980);//032951B0    55              push ebp
             at.call_eax();
             at.popad();
             at.retn();
@@ -2534,7 +2534,7 @@ namespace CallTool {
             while (gMrw.readInt32(address + 0x20) > 0 && time < 2000)
             {
                 time += 1;
-                gMrw.writeInt32(0x559C95C, num);
+                gMrw.writeInt32(0x559E95C, num);
             }
 
         }
