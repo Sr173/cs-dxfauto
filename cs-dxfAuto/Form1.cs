@@ -815,7 +815,7 @@ int cch
         //    return RB_2_CreateSkill.Checked == true;
         //}
 
-        Int32 FunctionID_1 = 2;
+        Int32 FunctionID_1 = 3;
 
         public Int32 GetClearMapFunction() {
             return FunctionID_1;
@@ -1408,13 +1408,16 @@ int cch
 
             for (int i = 0; i < m; i++)
                 comboBox1.Items.Add(MapInfo.mapInfo[i].name);
+			comboBox1.SelectedIndex = 13;
+			comboBox2.SelectedIndex = 4;
+			comboBox3.SelectedIndex = 4;
 
 
-            //if (result[0] == false)
-            //    TerminateProcess(IntPtr.Subtract(IntPtr.Zero, 1), 0);
+			//if (result[0] == false)
+			//    TerminateProcess(IntPtr.Subtract(IntPtr.Zero, 1), 0);
 
-        }
-        private void listView1_Click(object sender, EventArgs e) {
+		}
+		private void listView1_Click(object sender, EventArgs e) {
             EDIT_ID.Text = listView1.SelectedItems[0].Text;
             if (listView1.SelectedItems[0].SubItems[5].Text != "null") {
                 string temp = listView1.SelectedItems[0].SubItems[5].Text;

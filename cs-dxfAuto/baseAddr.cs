@@ -18,7 +18,7 @@ namespace cs_dxfAuto {
         public static Int32 dwCall_SSS = 0x28B2990;
         public static Int32 dwBase_Time = 0x20A028;
         public static Int32 dwBase_TiaoZhan = 0x2EC;
-        public static Int32 dwBase_SEND = 0x57DC43C;
+        public static Int32 dwBase_SEND = 0x57DE43C;
         public static Int32 dwCall_HANDLE = 0x03745C20;
         public static Int32 dwCall_ADD = 0x03745D30;//03744100    55              push ebp
 		public static Int32 dwCall_SEND = 0x03747460;

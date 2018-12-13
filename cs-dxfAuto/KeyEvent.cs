@@ -154,7 +154,7 @@ namespace cs_dxfAuto {
 
                         Byte[] old = gMrw.readData(gMrw.read<uint>(addr) - 0x1000, 0x3000);
                         gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
-                        gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//0314338C    B0 01           mov al,0x1
+                        gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//0314338C    B0 01           mov al,0x1
 
                         int atk_addr = fm1.fun.LoadCall(baseAddr.GetIndexObj.Atk, "passiveobject/actionobject/monster/anton_normal/phase1/blacksmoke/dumy/attackinfo/dumy2_basic.atk");
 
