@@ -2315,7 +2315,7 @@ int cch
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x5BC, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
             gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );
 
 
 
@@ -2375,7 +2375,7 @@ int cch
             at.setEvent();
             gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
             if (Config.isHook)
-                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//031435BC    B0 01           mov al,0x1
+                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//031435BC    B0 01           mov al,0x1
         }
 
         private int GetEquipDirAddress(int code) {
@@ -3440,7 +3440,7 @@ int cch
         }
 
         private void button1_Click_2(object sender, EventArgs e) {
-
+            gMrw.read<int>(0x80000000);
         }
 
         private void button1_MouseCaptureChanged(object sender, EventArgs e) {

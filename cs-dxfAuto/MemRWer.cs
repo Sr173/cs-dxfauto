@@ -22,7 +22,10 @@ namespace cs_dxfAuto
         [DllImport("kernel32.dll")]
         public static extern bool WriteProcessMemory(uint hProcess, uint lpBaseAddr, float[] lpBuffer, uint size, uint lpNumber);
 
-
+        [DllImport("dll.dll")]
+        public static extern bool readProcessMemory(int pid, long lpBaseAddr, int size, IntPtr lpBuffer ) ;
+        [DllImport("dll.dll")]
+        public static extern bool writeProcessMemory(int pid, long lpBaseAddr, int size , IntPtr lpBuffer);
 
         private uint myhProcess;
         public int pid;
@@ -31,10 +34,10 @@ namespace cs_dxfAuto
         public MemRWer(uint hProcess,int pid)
         {
             this.pid = pid;
-            int handle = Win32.Kernel.OpenProcess(0x1, false, pid);
-            Form1.promoteHandle(handle, 0x7FFFFFFF);
-            Form1.unlinkHandleTable();
-            myhProcess = (uint)handle;
+            //int handle = Win32.Kernel.OpenProcess(0x1, false, pid);
+            //Form1.promoteHandle(handle, 0x7FFFFFFF);
+            //Form1.unlinkHandleTable();
+            //myhProcess = (uint)handle;
             //myhProcess = hProcess;
         }
         public Int32 GetHandle()
@@ -44,7 +47,7 @@ namespace cs_dxfAuto
             return (Int32)myhProcess;
             //return (Int32)myhProcess;
         }
-        public byte readInt8(int lpBaseAddr)
+        public byte readInt8(long lpBaseAddr)
         {
             //uint mhProcess = (uint)GetHandle();
             //Byte result = 0;
@@ -55,7 +58,7 @@ namespace cs_dxfAuto
             ////MemRWer.closeHandle(mhProcess);
             return read<Byte>(lpBaseAddr);
         }
-        public UInt16 readUInt16(int lpBaseAddr)
+        public UInt16 readUInt16(long lpBaseAddr)
         {
             //uint mhProcess = (uint)GetHandle();
             //UInt16 result = 0;
@@ -67,7 +70,7 @@ namespace cs_dxfAuto
             return read<UInt16>(lpBaseAddr);
         }
 
-        public Int16 readInt16(int lpBaseAddr)
+        public Int16 readInt16(long lpBaseAddr)
         {
             //uint mhProcess = (uint)GetHandle();
             //Int16 result = 0;
@@ -77,7 +80,7 @@ namespace cs_dxfAuto
             //result = Marshal.ReadInt16(vBytesAddress);
             return read<Int16>(lpBaseAddr);
         }
-        public Int32 readInt32(int lpBaseAddr)
+        public Int32 readInt32(long lpBaseAddr)
         {
 
             //uint mhProcess = (uint)GetHandle();
@@ -89,7 +92,7 @@ namespace cs_dxfAuto
             ////MemRWer.closeHandle(mhProcess);
             return read<Int32>(lpBaseAddr);
         }
-        public float readFloat(int lpBaseAddr)
+        public float readFloat(long lpBaseAddr)
         {
             //uint mhProcess = (uint)GetHandle();
             //float[] buffer = new float[] { 0 };
@@ -97,7 +100,7 @@ namespace cs_dxfAuto
             ////MemRWer.closeHandle(mhProcess);
             return read<float>(lpBaseAddr);
         }
-        public Int64 readInt64(int lpBaseAddr)
+        public Int64 readInt64(long lpBaseAddr)
         {
             //uint mhProcess = (uint)GetHandle();
             //Int64 result = 0;
@@ -108,25 +111,26 @@ namespace cs_dxfAuto
             ////MemRWer.closeHandle(mhProcess);
             return read<Int64>(lpBaseAddr);
         }
-        public Int32 readInt32(int lpBaseAddr, params int[] ofe)
+        public Int32 readInt32(long lpBaseAddr, params int[] ofe)
         {
 
-            int result = readInt32(lpBaseAddr);
+            uint result = read<uint>(lpBaseAddr);
 
             foreach (Int32 offset in ofe)
             {
-                result = readInt32(result + offset);
+                result = read<uint>((int)(result + (uint)offset));
             }
-            return result;
+            return (int)result;
         }
 
-        public T read<T>(int lpBaseAddr)
+        public T read<T>(long lpBaseAddr)
         {
             uint mhProcess = (uint)GetHandle();
             T[] t = new T[1];
             int size = Marshal.SizeOf(t[0]);
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(t, 0);
-            ReadProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
+            //ReadProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
+            readProcessMemory(pid, (uint)lpBaseAddr, size, vBytesAddress);
             MemRWer.closeHandle(mhProcess);
             return t[0];
         }
@@ -140,7 +144,10 @@ namespace cs_dxfAuto
             else
                 result = temp;
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(result, 0);
-            ReadProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
+            //ReadProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
+
+            readProcessMemory(pid, (uint)lpBaseAddr, (int)lenth, vBytesAddress);
+
             MemRWer.closeHandle(mhProcess);
             return result;
         }
@@ -153,7 +160,10 @@ namespace cs_dxfAuto
 
             int size = Marshal.SizeOf(t[0]);
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(t, 0);
-            WriteProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
+           // WriteProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
+
+            writeProcessMemory(pid, (uint)lpBaseAddr, (int)size, vBytesAddress);
+
             //MessageBox.Show(Win32.Kernel.GetLastError().ToString());
             MemRWer.closeHandle(mhProcess);
         }
@@ -188,7 +198,9 @@ namespace cs_dxfAuto
             uint mhProcess = (uint)GetHandle();
 
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(Data, 0);
-            WriteProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
+            //WriteProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
+            writeProcessMemory(pid, (uint)lpBaseAddr, (int)lenth, vBytesAddress);
+        
             MemRWer.closeHandle(mhProcess);
 
         }

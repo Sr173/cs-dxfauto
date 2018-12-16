@@ -968,7 +968,7 @@ namespace cs_dxfAuto
 
                         //    Byte[] old = fm1.gMrw.readData(fm1.gMrw.read<uint>(addr) - 0x1000, 0x3000);
                         //    fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
-                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//0314338C    B0 01           mov al,0x1
+                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//0314338C    B0 01           mov al,0x1
                         //    fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
                         //}
                         //fm1.fun.EncryptionCall(fm1.gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x5F4, 0);
@@ -1016,7 +1016,7 @@ namespace cs_dxfAuto
                         //fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x5BC, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
                         fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x35C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
-                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//0299D8D0    B0 01           mov al,0x1                        mov al,0x1
+                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//0299D8D0    B0 01           mov al,0x1                        mov al,0x1
 																								   //029B6880    B0 01           mov al,0x1
 
 
@@ -2343,7 +2343,7 @@ namespace cs_dxfAuto
 
                         //    Byte[] old = fm1.gMrw.readData(fm1.gMrw.read<uint>(addr) - 0x1000, 0x3000);
                         //    fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
-                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880 );//0314338C    B0 01           mov al,0x1
+                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//0314338C    B0 01           mov al,0x1
                         //    fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
                         //}
                         //fm1.fun.EncryptionCall(fm1.gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x5F4, 0);
@@ -2412,9 +2412,12 @@ namespace cs_dxfAuto
 
                         fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x35C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
                         if (Config.isHook)
-                            fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B6880);//029B6880    B0 01           mov al,0x1
-                    }
-                     if (!Config.IsRoleBig)
+                            fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60);//029B6880    B0 01           mov al,0x1
+																									  //029B8C60    B0 01           mov al,0x1
+
+
+					}
+					if (!Config.IsRoleBig)
                         fm1.fun.bfs_load();
                     fm1.GetIncomeBegin();
                     //if (IsLoad == false)
