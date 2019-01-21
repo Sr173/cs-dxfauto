@@ -113,6 +113,7 @@ namespace cs_dxfAuto
         }
         public Int32 readInt32(long lpBaseAddr, params int[] ofe)
         {
+            
 
             uint result = read<uint>(lpBaseAddr);
 
@@ -125,18 +126,27 @@ namespace cs_dxfAuto
 
         public T read<T>(long lpBaseAddr)
         {
+            if (lpBaseAddr < 0)
+            {
+                lpBaseAddr = ((uint)lpBaseAddr & 0xFFFFFFFF);
+            };
             uint mhProcess = (uint)GetHandle();
             T[] t = new T[1];
             int size = Marshal.SizeOf(t[0]);
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(t, 0);
             //ReadProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
-            readProcessMemory(pid, (uint)lpBaseAddr, size, vBytesAddress);
+            readProcessMemory(pid, lpBaseAddr, size, vBytesAddress);
             MemRWer.closeHandle(mhProcess);
             return t[0];
         }
 
         public byte[] readData(uint lpBaseAddr, uint lenth, byte[] temp = null)
         {
+            if (lpBaseAddr < 0)
+            {
+                lpBaseAddr = ((uint)lpBaseAddr & 0xFFFFFFFF);
+            };
+
             uint mhProcess = (uint)GetHandle();
             byte[] result;
             if (temp == null)
@@ -146,7 +156,7 @@ namespace cs_dxfAuto
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(result, 0);
             //ReadProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
 
-            readProcessMemory(pid, (uint)lpBaseAddr, (int)lenth, vBytesAddress);
+            readProcessMemory(pid, lpBaseAddr, (int)lenth, vBytesAddress);
 
             MemRWer.closeHandle(mhProcess);
             return result;
@@ -154,6 +164,11 @@ namespace cs_dxfAuto
 
         public void write<T>(uint lpBaseAddr,T data)
         {
+            if (lpBaseAddr < 0)
+            {
+                lpBaseAddr = ((uint)lpBaseAddr & 0xFFFFFFFF);
+            };
+
             uint mhProcess = (uint)GetHandle();
             T[] t = new T[1];
             t[0] = data;
@@ -161,9 +176,7 @@ namespace cs_dxfAuto
             int size = Marshal.SizeOf(t[0]);
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(t, 0);
            // WriteProcessMemory(mhProcess, (uint)lpBaseAddr, vBytesAddress, (uint)size, 0);
-
-            writeProcessMemory(pid, (uint)lpBaseAddr, (int)size, vBytesAddress);
-
+            writeProcessMemory(pid, lpBaseAddr, (int)size, vBytesAddress);
             //MessageBox.Show(Win32.Kernel.GetLastError().ToString());
             MemRWer.closeHandle(mhProcess);
         }
@@ -195,11 +208,15 @@ namespace cs_dxfAuto
         }
         public void writedData(uint lpBaseAddr, Byte[] Data, uint lenth)
         {
+            if (lpBaseAddr < 0)
+            {
+                lpBaseAddr = ((uint)lpBaseAddr & 0xFFFFFFFF);
+            };
             uint mhProcess = (uint)GetHandle();
 
             IntPtr vBytesAddress = Marshal.UnsafeAddrOfPinnedArrayElement(Data, 0);
             //WriteProcessMemory(mhProcess, lpBaseAddr, vBytesAddress, lenth, 0);
-            writeProcessMemory(pid, (uint)lpBaseAddr, (int)lenth, vBytesAddress);
+            writeProcessMemory(pid, lpBaseAddr, (int)lenth, vBytesAddress);
         
             MemRWer.closeHandle(mhProcess);
 

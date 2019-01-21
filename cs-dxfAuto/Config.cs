@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cs_dxfAuto {
-    static class Config {
+namespace cs_dxfAuto
+{    static class Config {
         public static bool IsSellPink = false;
         public static bool IsRoleBig = false;
         public static bool CloseLevelUp = false;

@@ -106,18 +106,20 @@ namespace cs_dxfAuto {
                 //0331CCC0    E8 2AA9D25B     call 5F0475EF
 
 
-                virtualAddr = /*VirtualAllocEx(hProcess, 0, 0x1000, 0x103000, 0x40)*/gMrw.readInt32(0x033560D0 + 1) + 0x033560D0 + 0x100;//033558A0    E8 28203C10     call 137178CD
-																																		 //033558A0    E8 28203C10     call 137178CD
+                virtualAddr = /*VirtualAllocEx(hProcess, 0, 0x1000, 0x103000, 0x40)*/gMrw.readInt32(0x0335EB50 + 1) + 0x0335EB50 + 0x100;//033558A0    E8 28203C10     call 137178CD
+                                                                                                                                         //033C96A0    E8 BEE26D5A     call 5DAA7963
 
-				//033560D0    E8 8E181A58 call 5B4F7963
+                //033558A0    E8 28203C10     call 137178CD
 
-
-
-
+                //033560D0    E8 8E181A58 call 5B4F7963
 
 
-							//virtualAddr = GetProcAddress(GetModuleHandleA("ntdll.dll"), "RtlFreeMemoryBlockLookaside");
-							Int32 eid = (Int32)GetLastError();
+
+
+
+
+                //virtualAddr = GetProcAddress(GetModuleHandleA("ntdll.dll"), "RtlFreeMemoryBlockLookaside");
+                Int32 eid = (Int32)GetLastError();
 
                 if (virtualAddr == 0) {
                     if (eid == 8L) {
@@ -466,7 +468,7 @@ namespace cs_dxfAuto {
 
 
 
-
+            //0335EB50    E8 0E8ED25B     call 5F087963
             //gMrw.writeInt32(virtualAddr + 0x990, virtualAddr);
             //while (gMrw.readInt32(virtualAddr + 0x990) == virtualAddr)
             //{

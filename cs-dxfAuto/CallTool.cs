@@ -232,8 +232,8 @@ namespace CallTool {
             at.push(0);
             at.push(code);
             at.mov_ecx(addr);
-            at.mov_eax(0x0276A350);//0276A350    55              push ebp
-			at.call_eax();
+            at.mov_eax(0x0276FBD0);//0276FBD0    55              push ebp
+            at.call_eax();
             at.popad();
             at.retn();
             at.RunRempteThreadWithMainThread();
@@ -1786,7 +1786,7 @@ namespace CallTool {
             Int32 item = first + 36;
             OpenStore(317);
             for (Int32 i = 0; i < 56; i++) {
-                Int32 point = gMrw.readInt32(item + i * 4);
+                long point = gMrw.read<uint>(item + i * 4);
                 string name = gMrw.readString(gMrw.readInt32(point + 0x24));
 
                 if (!Config.IsSellPink) {
@@ -2511,30 +2511,36 @@ namespace CallTool {
             return MapID[GetCharaLevel()];
         }
 
-        public void sellPrompt(int address)
+        public void sellPrompt(long address)
         {
             at.clear();
             at.pushad();
-            at.mov_esi(address);
+            at.mov_esi((int)address);
             at.mov_edi(gMrw.readInt32(address));
             at.push(1);
             at.push(0);
             at.push(1);
             at.push_esi();
             at.push(0x3E);
-            at.mov_ecx(0x57C5B50);
-            at.mov_eax(0x032C9980);//032951B0    55              push ebp
+            at.mov_ecx(0x57D4F80);
+            at.mov_eax(0x032D2080);//032951B0    55              push ebp
             at.call_eax();
             at.popad();
             at.retn();
             at.RunRempteThreadWithMainThread();
 
-            int num = gMrw.readInt32(baseAddr.dwBase_Shop, 0xC4B8, 0x1B0, 0x10C);
+            int num = gMrw.readInt32(baseAddr.dwBase_Shop, 0xC508, 0x1B0, 0x10C);
             int time = 0;
+
+            writeLogLine(address.ToString());
+            writeLogLine(gMrw.readInt32(address + 0x20).ToString());
             while (gMrw.readInt32(address + 0x20) > 0 && time < 2000)
             {
-                time += 1;
-                gMrw.writeInt32(0x559E95C, num);
+                gMrw.writeInt32(0x55ADAD4, num);
+
+                //writeLogLine("GGGGG");
+                time += 200;
+                Thread.Sleep(200);
             }
 
         }
@@ -3908,8 +3914,8 @@ namespace CallTool {
 
             Point[] p = new Point[4];
 
-            for (int i = gMrw.readInt32(map + 0xC0); i < end; i += 4) {
-                Int32 addr = gMrw.readInt32(i);
+            for (uint i = gMrw.read<uint>(map + 0xC0); i < end; i += 4) {
+                uint addr = gMrw.read<uint>(i);
                 Int32 type = gMrw.readInt32(addr + 0xA4);
 
                 if (type == 4129) {
@@ -4560,7 +4566,7 @@ namespace CallTool {
             SendGameDataEnd();
         }
 
-        public Pos getObjPos(int addr)
+        public Pos getObjPos(long addr)
         {
             Pos p;
             if (gMrw.readInt32(addr + 0xA4) == 273)

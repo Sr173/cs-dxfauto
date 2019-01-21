@@ -2315,7 +2315,7 @@ int cch
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x5BC, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
             gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );
 
 
 
@@ -2375,7 +2375,7 @@ int cch
             at.setEvent();
             gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
             if (Config.isHook)
-                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x029B8C60 );//031435BC    B0 01           mov al,0x1
+                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );//031435BC    B0 01           mov al,0x1
         }
 
         private int GetEquipDirAddress(int code) {
@@ -3022,28 +3022,38 @@ int cch
         }
 
         private void button43_Click_1(object sender, EventArgs e) {
-            Int32[] e_code = { 70038, 70039, 70040, 70037, 70041, 56804, 70034, 56805 };
-            int check = GetMonsterDirAddress(Int32.Parse(textBox1.Text));
+            //Int32[] e_code = { 70038, 70039, 70040, 70037, 70041, 56804, 70034, 56805 };
+            //int check = GetMonsterDirAddress(Int32.Parse(textBox1.Text));
 
 
-            foreach (int m in e_code)
-            {
-                gMrw.writeInt32(GetMonsterDirAddress(m) + 4, gMrw.readInt32(check + 4));
+            //foreach (int m in e_code)
+            //{
+            //    gMrw.writeInt32(GetMonsterDirAddress(m) + 4, gMrw.readInt32(check + 4));
 
-            }
+            //}
 
 
             //writeLogLine(gMrw.Decryption(gMrw.readInt32(baseAddr.dwBase_Character) + 0xAC).ToString());
 
-            //Int32 addr = fun.LoadCall(baseAddr.GetIndexObj.Monster, gMrw.readString(gMrw.readInt32(GetMonsterDirAddress(50501) + 4)));
-            //addr = gMrw.readInt32(addr + 0xC94);
-            //gMrw.writeInt32(addr + 0xC, 10000000);
-            //gMrw.writeInt32(addr + 0x10, 100000);
-            //gMrw.writeInt32(addr + 0x14, 100);
+            int addr;
+            KeyEvent.fm1.fun.CreateEmery(KeyEvent.fm1.gMrw.readInt32(baseAddr.dwBase_Character), 1, 50501);
+            while ((addr = KeyEvent.fm1.fun.GetAddressByCode(50501)) == 0) Thread.Sleep(0);
+            //KeyEvent.fm1.gMrw.writeInt32(addr + 0x828, 0);
+            //KeyEvent.fm1.gMrw.writeInt32(addr + 0x8C8, 1);
+            addr = fun.LoadCall(baseAddr.GetIndexObj.Monster, gMrw.readString(gMrw.readInt32(GetMonsterDirAddress(50501) + 4)));
+            addr = gMrw.readInt32(addr + 0xCAC);
+            gMrw.writeInt32(addr + 0xC, 1000);
+            gMrw.writeInt32(addr + 0x10, 1000);
+            gMrw.writeInt32(addr + 0x14, 100);
+            addr = fun.LoadCall(baseAddr.GetIndexObj.Monster, gMrw.readString(gMrw.readInt32(GetMonsterDirAddress(70000) + 4)));
 
 
+            //var addr_1 = fun.LoadCall(baseAddr.GetIndexObj.Monster, gMrw.readString(gMrw.readInt32(GetMonsterDirAddress(70000) + 4)));
+            //gMrw.writeInt32(addr_1 + 0xC94, addr);
+            //KeyEvent.fm1.fun.CreateEmery(KeyEvent.fm1.gMrw.readInt32(baseAddr.dwBase_Character), 1, 50501);
+            //6298F688 6298F6A0 6298F6A0
             //writeLogLine(gMrw.readInt32(addr + baseAddr.dwOffset_Equip_wq, 0x20).ToString());
-
+            //6298F688 6298F6A0 6298F6A0
             //Int32 old = GetEquipDirAddress_test(29906);
             //gMrw.writeInt32(old + 4, gMrw.readInt32(GetEquipDirAddress_test(102000532) + 4));
             //old = GetCodeDirAddress(140228);
@@ -3440,7 +3450,7 @@ int cch
         }
 
         private void button1_Click_2(object sender, EventArgs e) {
-            gMrw.read<int>(0x80000000);
+            fun.Sell();
         }
 
         private void button1_MouseCaptureChanged(object sender, EventArgs e) {
