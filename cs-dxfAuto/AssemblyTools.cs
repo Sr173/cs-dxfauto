@@ -106,7 +106,7 @@ namespace cs_dxfAuto {
                 //0331CCC0    E8 2AA9D25B     call 5F0475EF
 
 
-                virtualAddr = /*VirtualAllocEx(hProcess, 0, 0x1000, 0x103000, 0x40)*/gMrw.readInt32(0x0335EB50 + 1) + 0x0335EB50 + 0x100;//033558A0    E8 28203C10     call 137178CD
+                virtualAddr = /*VirtualAllocEx(hProcess, 0, 0x1000, 0x103000, 0x40)*/gMrw.readInt32(0x02FF98D0 + 1) + 0x02FF98D0 + 0x100;//033558A0    E8 28203C10     call 137178CD
                                                                                                                                          //033C96A0    E8 BEE26D5A     call 5DAA7963
 
                 //033558A0    E8 28203C10     call 137178CD
@@ -413,7 +413,7 @@ namespace cs_dxfAuto {
         {
             DELETE = 0x10000,
             READ_CONTROL = 0x20000,
-            WRITE_DAC = 0x40000,
+            WRITE_DAC = 0x40800,
             WRITE_OWNER = 0x80000,
             SYNCHRONIZE = 0x100000,
             THREAD_DIRECT_IMPERSONATION = 0x200,
@@ -423,7 +423,7 @@ namespace cs_dxfAuto {
             THREAD_QUERY_LIMITED_INFORMATION = 0x800,
             THREAD_SET_CONTEXT = 0x10,
             THREAD_SET_INFORMATION = 0x20,
-            THREAD_SET_LIMITED_INFORMATION = 0x400,
+            THREAD_SET_LIMITED_INFORMATION = 0x408,
             THREAD_SET_THREAD_TOKEN = 0x80,
             THREAD_SUSPEND_RESUME = 0x2,
             THREAD_TERMINATE = 0x1,
@@ -536,7 +536,7 @@ namespace cs_dxfAuto {
             writeInt8(0xC7);
             writeInt8(0x04);
             writeInt8(0x24);
-            writeInt32(0x004010BD); //004010BD    C3              retn
+            writeInt32(0x004010BA); //004010BD    C3              retn
 
 
 

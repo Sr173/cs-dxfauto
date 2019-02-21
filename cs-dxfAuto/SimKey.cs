@@ -67,10 +67,10 @@ namespace cs_dxfAuto {
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4)
             {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
                 if (grope == 0)
                     continue;

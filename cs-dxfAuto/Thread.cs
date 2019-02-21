@@ -340,7 +340,7 @@ namespace cs_dxfAuto
             for (int i = fm1.gMrw.readInt32(_object + 0xC0); i < dest; i += 4)
             {
                 Int32 onobj = fm1.gMrw.readInt32(i);
-                string name = fm1.gMrw.readString(fm1.gMrw.readInt32(onobj + 0x4EC));
+                string name = fm1.gMrw.readString(fm1.gMrw.readInt32(onobj + 0x4F4));
                 if (name.IndexOf("MoveMap") >= 0)
                     fm1.gMrw.writedData((uint)fm1.gMrw.readInt32(onobj + 0xAC) + 0x10, data, 12);
 
@@ -353,7 +353,7 @@ namespace cs_dxfAuto
         int yw_twice = 0;
         public void yw_zb_thread()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             while (true)
             {
                 Thread.Sleep(2000);
@@ -517,7 +517,7 @@ namespace cs_dxfAuto
         }
         public void ywThread()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             while (true)
             {
                 Thread.Sleep(2000);
@@ -765,7 +765,7 @@ namespace cs_dxfAuto
         }
         public void AutoLevel()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             bool IsLoad = false;
             if (fm1.GetClearMapFunction() == 4)
                 fm1.checkCode();
@@ -968,7 +968,7 @@ namespace cs_dxfAuto
 
                         //    Byte[] old = fm1.gMrw.readData(fm1.gMrw.read<uint>(addr) - 0x1000, 0x3000);
                         //    fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
-                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );//0314338C    B0 01           mov al,0x1
+                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );//0314338C    B0 01           mov al,0x1
                         //    fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
                         //}
                         //fm1.fun.EncryptionCall(fm1.gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x5F4, 0);
@@ -995,13 +995,13 @@ namespace cs_dxfAuto
                         fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
                         fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
 
-                        if (fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C) < fm1.at.GetVirtualAddr())
+                        if (fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) < fm1.at.GetVirtualAddr())
                         {
                             fm1.at.clear();
                             //fm1.at.mov_eax(atk_addr);
                             //fm1.at.retn(4);
                             fm1.at.mov_esp_ptr_addx(4, atk_addr);
-                            fm1.at.push(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C));
+                            fm1.at.push(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
                             fm1.at.retn();
                             int i = 0;
                             foreach (byte a in fm1.at.Code)
@@ -1015,16 +1015,16 @@ namespace cs_dxfAuto
                         //fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x834, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
                         //fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x5BC, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
-                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x35C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
-                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );//0299D8D0    B0 01           mov al,0x1                        mov al,0x1
-																								   //029B6880    B0 01           mov al,0x1
+                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x36C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );//02E1F9DC    B0 01           mov al,0x1
 
 
 
-					}
+
+                    }
 
 
-					while (!IsBossDie())
+                    while (!IsBossDie())
                     {
                         ////fun.KeyPress((Int32)Keys.Space);
 
@@ -1089,7 +1089,7 @@ namespace cs_dxfAuto
                                         //fm1.fun.checkGrope();
                                         fm1.fun.CreateEmery(fm1.gMrw.readInt32(baseAddr.dwBase_Character), 0, 100010);
                                         while ((addr = fm1.fun.GetAddressByCode(100010)) == 0) Thread.Sleep(1);
-                                        fm1.gMrw.writeInt32(addr + 0x828, 0);
+                                        fm1.gMrw.writeInt32(addr + 0x870, 0);
                                         while ((addr = fm1.fun.GetAddressByCode(100010)) != 0) Thread.Sleep(1);
                                         break;
                                     }
@@ -1259,7 +1259,7 @@ namespace cs_dxfAuto
 
         public void PickUpWithSy()
         {
-            string cname = fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x400));
+            string cname = fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x408));
 
             Int32 map = fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0xC8);
             Int32 End = fm1.gMrw.readInt32(map + 0xC4);
@@ -1297,7 +1297,7 @@ namespace cs_dxfAuto
         }
         public void PickUpWithYj()
         {
-            string cname = fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x400));
+            string cname = fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x408));
 
             Int32 map = fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0xC8);
             Int32 End = fm1.gMrw.readInt32(map + 0xC4);
@@ -1367,7 +1367,7 @@ namespace cs_dxfAuto
 
                     if (item_pj >= 2)
                     {
-                        fm1.writeGetLine(fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x400)) + ": 获得 [" + name + "]");
+                        fm1.writeGetLine(fm1.gMrw.readString(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0x408)) + ": 获得 [" + name + "]");
                         temp[Count++] = fm1.gMrw.Decryption(b + 0xAC);
 
                     }
@@ -1396,7 +1396,7 @@ namespace cs_dxfAuto
         }
         private void SY_SKZM()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
 
             while (true)
             {
@@ -1533,7 +1533,7 @@ namespace cs_dxfAuto
         }
         private void SY()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             if (fm1.GetClearMapFunction() == 1)
                 fm1.checkSYCode();
             bool IsLoad = false;
@@ -1662,9 +1662,9 @@ namespace cs_dxfAuto
                                         for (Int32 i = fm1.gMrw.readInt32(map + 0xC0); i < dest; i += 4)
                                         {
                                             Int32 onobj = fm1.gMrw.readInt32(i);
-                                            Int32 zy = fm1.gMrw.readInt32(onobj + 0x828);
+                                            Int32 zy = fm1.gMrw.readInt32(onobj + 0x870);
                                             Int32 type = fm1.gMrw.readInt32(onobj + 0xA4);
-                                            Int32 grope = fm1.gMrw.readInt32(onobj + 0x828);
+                                            Int32 grope = fm1.gMrw.readInt32(onobj + 0x870);
                                             if (grope == 0)
                                                 continue;
                                             if (onobj == fm1.gMrw.readInt32(baseAddr.dwBase_Character))
@@ -1715,9 +1715,9 @@ namespace cs_dxfAuto
                                         for (Int32 i = fm1.gMrw.readInt32(map + 0xC0); i < dest; i += 4)
                                         {
                                             Int32 onobj = fm1.gMrw.readInt32(i);
-                                            Int32 zy = fm1.gMrw.readInt32(onobj + 0x828);
+                                            Int32 zy = fm1.gMrw.readInt32(onobj + 0x870);
                                             Int32 type = fm1.gMrw.readInt32(onobj + 0xA4);
-                                            Int32 grope = fm1.gMrw.readInt32(onobj + 0x828);
+                                            Int32 grope = fm1.gMrw.readInt32(onobj + 0x870);
                                             if (grope == 0)
                                                 continue;
                                             if (onobj == fm1.gMrw.readInt32(baseAddr.dwBase_Character))
@@ -1809,7 +1809,7 @@ namespace cs_dxfAuto
         }
         private void BM()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             if (fm1.GetClearMapFunction() == 4)
                 fm1.checkBMCode();
             bool IsLoad = false;
@@ -1935,7 +1935,7 @@ namespace cs_dxfAuto
                                     //KeyEvent.fm1.fun.checkGrope();
                                     KeyEvent.fm1.fun.CreateEmery(KeyEvent.fm1.gMrw.readInt32(baseAddr.dwBase_Character), 1, 50501);
                                     while ((addr = KeyEvent.fm1.fun.GetAddressByCode(50501)) == 0) Thread.Sleep(0);
-                                    KeyEvent.fm1.gMrw.writeInt32(addr + 0x828, 0);
+                                    KeyEvent.fm1.gMrw.writeInt32(addr + 0x870, 0);
                                     KeyEvent.fm1.gMrw.writeInt32(addr + 0x8C8, 1);
                                 }
                                 if (fm1.fun.GetAddressByCode(69540) == 0)
@@ -1944,7 +1944,7 @@ namespace cs_dxfAuto
                                     Int32 addr;
                                     while ((addr = fm1.fun.GetAddressByCode(69540)) == 0) Thread.Sleep(0);
                                     fm1.gMrw.writeFloat(addr + 0x2F0, 20.0f);
-                                    fm1.gMrw.writeInt32(addr + 0x828, 0);
+                                    fm1.gMrw.writeInt32(addr + 0x870, 0);
                                 }
                                 else
                                 {
@@ -2111,7 +2111,7 @@ namespace cs_dxfAuto
                 //while (fm1.gMrw.readInt32(baseAddr.dwBase_Character) > 0) {fm1.fun.MouseClick(HotKey.bindWindow, 700, 670, true); Thread.Sleep(1000); }
 
 
-                //CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+                //CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
                 //SetForegroundWindow(HotKey.bindWindow);
                 //Thread.Sleep(1000);
                 ////fun.KeyPress((int)Keys.Right); 
@@ -2142,7 +2142,7 @@ namespace cs_dxfAuto
         }
         public void Jx()
         {
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
 
             while (true)
             {
@@ -2190,7 +2190,7 @@ namespace cs_dxfAuto
         {
 
             bool IsLoad = false;
-            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = fm1.gMrw.readInt32(fm1.gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             //if (fm1.GetClearMapFunction() == 4)
             //{
             //    fm1.checkGLDKx();
@@ -2286,23 +2286,9 @@ namespace cs_dxfAuto
                 //        fm1.fun.EncryptionCall(fm1.gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x9B0, 1000000);
                 //}
 
-                Thread.Sleep(1000);
-                fm1.fun.ChooseInstance();
 
-                if (mapType == MapI.MapType.Eiji)
-                {
-                    if (fm1.fun.GetCharaLevel() >= 85)
-                        fm1.fun.EnterInstance(Map_ID, 2, true, true);
-                    else if (fm1.fun.GetCharaLevel() >= 80)
-                        fm1.fun.EnterInstance(Map_ID, 1, true, true);
-                    else
-                        fm1.fun.EnterInstance(Map_ID, 0, true, true);
 
-                }
-                else if (mapType == MapI.MapType.Yuangu)
-                    fm1.fun.EnterInstance(Map_ID, 2, true, true);
-                else
-                    fm1.fun.EnterInstance(Map_ID, Level);
+
 
                 int minPL = mapType == MapI.MapType.Normal ? 0 : (mapType == MapI.MapType.Yuangu ? 6 : 8);
 
@@ -2311,8 +2297,26 @@ namespace cs_dxfAuto
                     (fm1.fun.GetPL() > minPL))
                     && eijiTwice < 5)
                 {
+
+                    Thread.Sleep(1000);
+                    fm1.fun.ChooseInstance();
                     if (mapType == MapI.MapType.Eiji)
                         eijiTwice++;
+
+                    if (mapType == MapI.MapType.Eiji)
+                    {
+                        if (fm1.fun.GetCharaLevel() >= 85)
+                            fm1.fun.EnterInstance(Map_ID, 2, true, true);
+                        else if (fm1.fun.GetCharaLevel() >= 80)
+                            fm1.fun.EnterInstance(Map_ID, 1, true, true);
+                        else
+                            fm1.fun.EnterInstance(Map_ID, 0, true, true);
+
+                    }
+                    else if (mapType == MapI.MapType.Yuangu)
+                        fm1.fun.EnterInstance(Map_ID, 2, true, true);
+                    else
+                        fm1.fun.EnterInstance(Map_ID, Level);
 
                     while (fm1.gMrw.readInt32(baseAddr.dwBase_Map_ID) <= 0)
                         Thread.Sleep(100);
@@ -2343,7 +2347,7 @@ namespace cs_dxfAuto
 
                         //    Byte[] old = fm1.gMrw.readData(fm1.gMrw.read<uint>(addr) - 0x1000, 0x3000);
                         //    fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
-                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );//0314338C    B0 01           mov al,0x1
+                        //    fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );//0314338C    B0 01           mov al,0x1
                         //    fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
                         //}
                         //fm1.fun.EncryptionCall(fm1.gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x5F4, 0);
@@ -2390,13 +2394,13 @@ namespace cs_dxfAuto
                         fm1.gMrw.writedData((uint)fm1.at.GetVirtualAddr() + 0x2001, old, 0x3000);
                         fm1.gMrw.writeInt32(addr, fm1.at.GetVirtualAddr() + 0x3001);
 
-                        if (fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C) < fm1.at.GetVirtualAddr())
+                        if (fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) < fm1.at.GetVirtualAddr())
                         {
                             fm1.at.clear();
                             //fm1.at.mov_eax(atk_addr);
                             //fm1.at.retn(4);
                             fm1.at.mov_esp_ptr_addx(4, atk_addr);
-                            fm1.at.push(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C));
+                            fm1.at.push(fm1.gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
                             fm1.at.retn();
                             int i = 0;
                             foreach (byte a in fm1.at.Code)
@@ -2410,9 +2414,9 @@ namespace cs_dxfAuto
                         //fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x834, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
                         //fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x5BC, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
-                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x35C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+                        fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x36C, fm1.at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
                         if (Config.isHook)
-                            fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C);//0318427C    B0 01           mov al,0x1
+                            fm1.gMrw.writeInt32(fm1.at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC);//0318427C    B0 01           mov al,0x1
 
                     }
                     if (!Config.IsRoleBig)
@@ -2709,20 +2713,20 @@ namespace cs_dxfAuto
 
                 while (fm1.gMrw.readInt32(baseAddr.dwBase_Map_ID) > 0)
                     {
-                        WinIo.KeyPress(VKKey.VK_ESCAPE);
-                        MyKey.MKeyDownUp(0, MyKey.Chr(0x29));
-                        if (fm1.fun.GetPL() <= minPL || eijiTwice >= 5)
-                        {
-                            MyKey.MKeyDownUp(0, MyKey.Chr(0x45));
-                            WinIo.KeyPress(VKKey.VK_F12);
-
-                        }
-                        else
-                        {
-                            WinIo.KeyPress(VKKey.VK_F10);
-                            //fm1.fun.QuitTeamInstance();
-                            MyKey.MKeyDownUp(0, MyKey.Chr(0x43));
-                        }
+                        //WinIo.KeyPress(VKKey.VK_ESCAPE);
+                        //MyKey.MKeyDownUp(0, MyKey.Chr(0x29));
+                        //if (fm1.fun.GetPL() <= minPL || eijiTwice >= 5)
+                        //{
+                        //    MyKey.MKeyDownUp(0, MyKey.Chr(0x45));
+                        //    WinIo.KeyPress(VKKey.VK_F12);
+                        //}
+                        //else
+                        //{
+                        //    WinIo.KeyPress(VKKey.VK_F10);
+                        //    //fm1.fun.QuitTeamInstance();
+                        //    MyKey.MKeyDownUp(0, MyKey.Chr(0x43));
+                        //}
+                        fm1.fun.QuitInstanceNoMainThread();
                         Thread.Sleep(500);
                     }
 

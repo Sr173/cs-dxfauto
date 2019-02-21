@@ -232,7 +232,7 @@ namespace CallTool {
             at.push(0);
             at.push(code);
             at.mov_ecx(addr);
-            at.mov_eax(0x0276FBD0);//0276FBD0    55              push ebp
+            at.mov_eax(0x0240FF60);//0240FF60    55              push ebp
             at.call_eax();
             at.popad();
             at.retn();
@@ -249,7 +249,7 @@ namespace CallTool {
             at.push(1);
             at.push(0);
             at.push(param);
-            at.mov_eax(gMrw.readInt32(addr, 0x410));
+            at.mov_eax(gMrw.readInt32(addr, 0x438));
             at.call_eax();
             at.popad();
             at.retn();
@@ -802,7 +802,7 @@ namespace CallTool {
             at.mov_eax(baseAddr.dwCall_SEND);
             at.call_eax();
 
-            at.push(0x400500);
+            at.push(0x408500);
             at.mov_ecx(gMrw.readInt32(baseAddr.dwBase_Bag, 0x68));
             at.mov_eax(0x65D690);
             at.call_eax();
@@ -1359,7 +1359,7 @@ namespace CallTool {
             SendGameDataEnd();
         }
         public void EnterChara(Int32 pos) {
-            gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C, pos);
+            gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160, pos);
 
             SendGameDataStart(0x4);
             SendGameDataAddInt16(pos);
@@ -1504,7 +1504,7 @@ namespace CallTool {
 
         public void checkItemSx()
         {
-            string cname = gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x400));
+            string cname = gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x408));
 
             Int32 map = gMrw.readInt32(baseAddr.dwBase_Character, 0xC8);
             Int32 End = gMrw.readInt32(map + 0xC4);
@@ -1514,7 +1514,7 @@ namespace CallTool {
                 Int32 b = gMrw.readInt32(i);
                 if (gMrw.readInt32(b + 0xA4) == 0x121)
                 {
-                    int point = gMrw.readInt32(b + 0x16C0);
+                    int point = gMrw.readInt32(b + 0x179C);
 
                     string name = gMrw.readString(gMrw.readInt32(point + 0x24));
                     int item_pj = gMrw.readInt32(point + 0x178);
@@ -1557,8 +1557,8 @@ namespace CallTool {
                 Int32 b = gMrw.readInt32(i);
 
                 if (gMrw.readInt32(b + 0xA4) == 1057) {
-                    Int32 End1 = gMrw.readInt32(b + 0x1734);
-                    for (Int32 m = gMrw.readInt32(b + 0x1730); m < End1; m += 8) {
+                    Int32 End1 = gMrw.readInt32(b + 0x180C);
+                    for (Int32 m = gMrw.readInt32(b + 0x1808); m < End1; m += 8) {
                         Int32 iAddr = gMrw.readInt32(m + 4);
                         Int32 destAddr = gMrw.readInt32(m);
                         _PickUp(destAddr);
@@ -1839,7 +1839,7 @@ namespace CallTool {
                 for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4)
                 {
                     Int32 onobj = gMrw.readInt32(i);
-                    Int32 grope = gMrw.readInt32(onobj + 0x828);
+                    Int32 grope = gMrw.readInt32(onobj + 0x870);
                     if (grope == 200)
                     {
                         addr = onobj;
@@ -1855,7 +1855,7 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
                 if (grope == 0)
                     continue;
@@ -2338,8 +2338,8 @@ namespace CallTool {
 
         public System.Drawing.Point GetCurrencyRoom() {
             System.Drawing.Point p = new System.Drawing.Point();
-            p.X = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0xBCC);
-            p.Y = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0xBD0);
+            p.X = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0xC68);
+            p.Y = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0xC6C);
             return p;
         }
 
@@ -2522,25 +2522,24 @@ namespace CallTool {
             at.push(1);
             at.push_esi();
             at.push(0x3E);
-            at.mov_ecx(0x57D4F80);
-            at.mov_eax(0x032D2080);//032951B0    55              push ebp
+            at.mov_ecx(gMrw.read<Int32>(baseAddr.dwBase_Shop));
+            at.mov_eax(0x02F6DF10);//032951B0    55              push ebp
             at.call_eax();
             at.popad();
+            at.mov_100100_eax();
             at.retn();
             at.RunRempteThreadWithMainThread();
-
-            int num = gMrw.readInt32(baseAddr.dwBase_Shop, 0xC508, 0x1B0, 0x10C);
+            int num = gMrw.readInt32(baseAddr.dwBase_Shop, 0xCDF0, 0x1A8, 0x10C);
             int time = 0;
 
             writeLogLine(address.ToString());
             writeLogLine(gMrw.readInt32(address + 0x20).ToString());
             while (gMrw.readInt32(address + 0x20) > 0 && time < 2000)
             {
-                gMrw.writeInt32(0x55ADAD4, num);
-
+                Thread.Sleep(20);
+                gMrw.writeInt32(0x5CBB84C, num);
                 //writeLogLine("GGGGG");
-                time += 200;
-                Thread.Sleep(200);
+                time += 20;
             }
 
         }
@@ -2562,7 +2561,7 @@ namespace CallTool {
                 at.push_edx();
                 at.writeInt8(0x8B);
                 at.writeInt8(0x87);
-                at.writeInt8(0xB0);
+                at.writeInt8(0xC0);
                 at.writeInt8(0x00);
                 at.writeInt8(0x00);
                 at.writeInt8(0x00);//mov eax, [edi + 0xAC];
@@ -2581,8 +2580,8 @@ namespace CallTool {
         }
         public System.Drawing.Point GetBossRoom() {
             System.Drawing.Point p = new System.Drawing.Point();
-            p.X = gMrw.Decryption(gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8) + 0xC70);
-            p.Y = gMrw.Decryption(gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8) + 0xC78);
+            p.X = gMrw.Decryption(gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8) + 0xD20);
+            p.Y = gMrw.Decryption(gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8) + 0xD28);
             return p;
         }
 
@@ -2600,7 +2599,7 @@ namespace CallTool {
 
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < End; i += 4) {
                 Int32 addr = gMrw.readInt32(i);
-                string name = gMrw.readString(gMrw.readInt32(addr + 0x404));
+                string name = gMrw.readString(gMrw.readInt32(addr + 0x40C));
                 if (name.Contains(Name) == true)
                     return addr;
             }
@@ -2620,7 +2619,7 @@ namespace CallTool {
                 Int32 addr = gMrw.readInt32(i);
                 Int32 type = gMrw.readInt32(addr + 0xA4);
 
-                int code = gMrw.readInt32(addr + 0x400);
+                int code = gMrw.readInt32(addr + 0x408);
                 if (code == Code)
                 {
                     if (_type != 0)
@@ -2642,7 +2641,7 @@ namespace CallTool {
 
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < End; i += 4) {
                 Int32 addr = gMrw.readInt32(i);
-                int code = gMrw.readInt32(addr + 0x400);
+                int code = gMrw.readInt32(addr + 0x408);
                 if (code == 65746 || code == 65747 || code == 65745 || code == 65749 || code == 65751)
                     return true;
             }
@@ -2666,7 +2665,7 @@ namespace CallTool {
                 code = 140157;
             Int32 equipAddress = CreateEquit(100090073);
             Int32 head = gMrw.readInt32(equipAddress + 0x10E4);
-            head = gMrw.readInt32(head + 0x1C, 0x80) + 0x4EC;
+            head = gMrw.readInt32(head + 0x1C, 0x80) + 0x4F4;
             equipData = gMrw.readData((uint)head, 12);
             gMrw.writeInt32(0x100104, 301);
             gMrw.writeInt32(0x100108, 85);
@@ -2694,13 +2693,13 @@ namespace CallTool {
         }
         public void renouOpen() {
             Int32 rAddr = GetAddressByName("雷剑");
-            equipData1 = gMrw.readData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4EC), 12);
-            gMrw.writedData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4EC), equipData, 12);
+            equipData1 = gMrw.readData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4F4), 12);
+            gMrw.writedData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4F4), equipData, 12);
             HideCall(rAddr);
         }
         public void renouHy() {
             Int32 rAddr = GetAddressByName("雷剑");
-            gMrw.writedData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4EC), equipData1, 12);
+            gMrw.writedData((uint)(gMrw.readInt32(rAddr + 0x2CD0, 0x10E4, 0x1C, 0x80) + 0x4F4), equipData1, 12);
 
         }
         public void QuitChooseInstance() {
@@ -2737,8 +2736,8 @@ namespace CallTool {
             front = 0; rear = 0;
             sum = 0;
 
-            Width = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2AC, 0 + 8 * nMapNum);
-            Height = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2AC, 4 + 8 * nMapNum);//获取当前地图宽高
+            Width = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2C0, 0 + 8 * nMapNum);
+            Height = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2C0, 4 + 8 * nMapNum);//获取当前地图宽高
 
             if (Width <= 0 || Height <= 0)
                 return;
@@ -2758,7 +2757,7 @@ namespace CallTool {
             System.Drawing.Point Begin = GetCurrencyRoom();
             System.Drawing.Point End = GetBossRoom();
 
-            Int32 Temp = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2C0, 4 + 0x14 * nMapNum);
+            Int32 Temp = gMrw.readInt32(baseAddr.dwBase_Shop - 8, baseAddr.dwBase_Time, 0xC8, 0x2D4, 4 + 0x14 * nMapNum);
 
             Begin.X = Begin.X * 3 + 1;
             Begin.Y = Begin.Y * 3 + 1;
@@ -2989,8 +2988,8 @@ namespace CallTool {
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
 
-                string name = gMrw.readString(gMrw.readInt32(onobj + 0x400));
-                string Obj_name = gMrw.readString(gMrw.readInt32(onobj + 0x4EC));
+                string name = gMrw.readString(gMrw.readInt32(onobj + 0x408));
+                string Obj_name = gMrw.readString(gMrw.readInt32(onobj + 0x4F4));
 
                 if (Obj_name.IndexOf("small_generator") >= 0) {
                     int addr = GetAddressByName("巨人波");
@@ -3024,7 +3023,7 @@ namespace CallTool {
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
 
-                string temp = gMrw.readString(gMrw.readInt32(onobj + 0x4EC));
+                string temp = gMrw.readString(gMrw.readInt32(onobj + 0x4F4));
 
                 if (temp.Contains("MoveMap") || temp.Contains("Crevasse")) {
                     x = (Int32)gMrw.readFloat(gMrw.readInt32(onobj + 0xAC) + 0x10);
@@ -3050,20 +3049,20 @@ namespace CallTool {
             Int32 x, y, z;
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
                 //if (zy == 0 || zy == 0xC8) {
                 //    continue;
                 //}
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
                 if (grope == 0)
                     continue;
                 if (onobj == gMrw.readInt32(baseAddr.dwBase_Character))
                     continue;
 
-                Int32 code = gMrw.readInt32(onobj + 0x400);
+                Int32 code = gMrw.readInt32(onobj + 0x408);
                 foreach (Int32 c in ecode) {
                     if (code == c) {
                         x = getObjPos(onobj).x;
@@ -3103,13 +3102,13 @@ namespace CallTool {
             Int32 x, y, z;
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
                 //if (zy == 0 || zy == 0xC8) {
                 //    continue;
                 //}
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
                 //if (type == 1057)
                 //{
@@ -3177,13 +3176,13 @@ namespace CallTool {
             Int32 x, y, z;
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
                 //if (zy == 0 || zy == 0xC8) {
                 //    continue;
                 //}
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
 
                 if (grope == 0)
@@ -3193,7 +3192,7 @@ namespace CallTool {
                 if (gMrw.readInt32(onobj + 0x3AE4) == 0)
                     continue;
 
-                Int32 code = (Int32)gMrw.readInt32(onobj + 0x400);
+                Int32 code = (Int32)gMrw.readInt32(onobj + 0x408);
 
                 if (code == 69018 || code == 64067 || code == 64068 || code == 64069 || code == 64069 || code == 64070) {
                     x = (Int32)gMrw.readFloat(gMrw.readInt32(onobj + 0xAC) + 0x10);
@@ -3213,7 +3212,7 @@ namespace CallTool {
             Int32 x, y, z;
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
                 if (zy == 0 || zy == 0xC8) {
                     continue;
                 }
@@ -3264,7 +3263,7 @@ namespace CallTool {
                     Int32 b = gMrw.readInt32(i);
                     if (gMrw.readInt32(b + 0xA4) == 0x121)
                     {
-                        //int point = gMrw.readInt32(b + 0x16C0);
+                        //int point = gMrw.readInt32(b + 0x179C);
                         int x = getObjPos(b).x;
                         if (x != getObjPos(gMrw.readInt32(baseAddr.dwBase_Character)).x)
                             flag = false;
@@ -3331,10 +3330,10 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
 
-                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x400);
+                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x408);
 
                 if (code == Code) {
                     x = (Int32)gMrw.readFloat(gMrw.readInt32(onobj + 0xAC) + 0x10);
@@ -3370,11 +3369,11 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
 
                 if (type == 0x211 || type == 273) {
-                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x400);
+                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x408);
 
                     if (code == 69018
                         || code == 64067
@@ -3419,11 +3418,11 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
 
 
                 if (type == 0x211 || type == 273) {
-                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x400);
+                    Int32 code = (Int32)gMrw.readInt32(onobj + 0x408);
 
                     if (code == 69018
                         || code == 64067
@@ -3476,7 +3475,6 @@ namespace CallTool {
             at.popad();
             at.retn();
             at.RunRempteThreadWithMainThread();
-
         }
         public void ArrangeBag(Int32 pos)
         {
@@ -3513,8 +3511,8 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
-                Int32 code = gMrw.readInt32(onobj + 0x400);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
+                Int32 code = gMrw.readInt32(onobj + 0x408);
 
                 if (grope == 0)
                     continue;
@@ -3555,8 +3553,8 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
-                Int32 code = gMrw.readInt32(onobj + 0x400);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
+                Int32 code = gMrw.readInt32(onobj + 0x408);
 
                 if (grope == 0)
                     continue;
@@ -3568,12 +3566,12 @@ namespace CallTool {
                     continue;
                 }
                 if (code == 107000904 && getObjPos(onobj).x == 801) {
-                    gMrw.writeInt32(onobj + 0x828, 0);
+                    gMrw.writeInt32(onobj + 0x870, 0);
                     return;
                 }
 
                 if (type == 0x211 || type == 273) {
-                    gMrw.writeInt32(onobj + 0x828, 0);
+                    gMrw.writeInt32(onobj + 0x870, 0);
                 }
             }
         }
@@ -3595,7 +3593,7 @@ namespace CallTool {
 
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < dest; i += 4) {
                 Int32 onobj = gMrw.readInt32(i);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
                 if (grope == 200) {
                     addr = onobj;
                     break;
@@ -3608,8 +3606,8 @@ namespace CallTool {
 
 
                 Int32 type = gMrw.readInt32(onobj + 0xA4);
-                Int32 grope = gMrw.readInt32(onobj + 0x828);
-                Int32 code = gMrw.readInt32(onobj + 0x400);
+                Int32 grope = gMrw.readInt32(onobj + 0x870);
+                Int32 code = gMrw.readInt32(onobj + 0x408);
 
                 if (grope == 0)
                     continue;
@@ -3656,7 +3654,7 @@ namespace CallTool {
                         TermidateObj(id[i]);
                     else {
                         EncryptionCall(id[i] + 0xAC, 0,IsMainThread);
-                        gMrw.writeInt32(id[i] + 0x828, 0);
+                        gMrw.writeInt32(id[i] + 0x870, 0);
                     }
 
                 }
@@ -3861,7 +3859,7 @@ namespace CallTool {
                     Int32 x = getObjPos(addr).x;
                     Int32 y = getObjPos(addr).y;
 
-                    string temp = gMrw.readString(gMrw.readInt32(addr + 0x4EC));
+                    string temp = gMrw.readString(gMrw.readInt32(addr + 0x4F4));
 
                     if (temp.IndexOf("Meltdown") >= 0)
                     {
@@ -3909,8 +3907,8 @@ namespace CallTool {
 
             raddr = raddr == 0 ? gMrw.readInt32(baseAddr.dwBase_Character) : raddr;
 
-            Int32 map = gMrw.readInt32(baseAddr.dwBase_Character, 0xC8);
-            Int32 end = gMrw.readInt32(map + 0xC4);
+            uint map = (uint)gMrw.readInt32(baseAddr.dwBase_Character, 0xC8);
+            uint end = gMrw.read<uint>(map + 0xC4);
 
             Point[] p = new Point[4];
 
@@ -3922,7 +3920,7 @@ namespace CallTool {
                     Int32 x = getObjPos(addr).x;
                     Int32 y = getObjPos(addr).y;
 
-                    string temp = gMrw.readString(gMrw.readInt32(addr + 0x4EC));
+                    string temp = gMrw.readString(gMrw.readInt32(addr + 0x4F4));
 
                     if (temp.IndexOf("Meltdown") >= 0) {
                         temp = temp.Substring(temp.IndexOf("Meltdown") + 1);
@@ -4471,7 +4469,7 @@ namespace CallTool {
 
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < End; i += 4) {
                 Int32 addr = gMrw.readInt32(i);
-                Int32 camp = gMrw.readInt32(addr + 0x828);
+                Int32 camp = gMrw.readInt32(addr + 0x870);
                 Int32 type = gMrw.readInt32(addr + 0xA4);
 
                 if (camp != 0) {
@@ -4496,7 +4494,7 @@ namespace CallTool {
 
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < End; i += 4) {
                 Int32 addr = gMrw.readInt32(i);
-                Int32 camp = gMrw.readInt32(addr + 0x828);
+                Int32 camp = gMrw.readInt32(addr + 0x870);
                 Int32 type = gMrw.readInt32(addr + 0xA4);
                 Int32 x = (Int32) getObjPos(addr).x;
 
@@ -4528,7 +4526,7 @@ namespace CallTool {
         }
 
         public void UseItem(Int32 iPos) {
-            gMrw.writeInt8(gMrw.readInt32(baseAddr.dwBase_Shop, 0x4C) + 0x400 + iPos, 1);
+            gMrw.writeInt8(gMrw.readInt32(baseAddr.dwBase_Shop, 0x4C) + 0x408 + iPos, 1);
         }
         public void Encryption(Int32 data, Int32 addr) {
 
@@ -4738,7 +4736,7 @@ namespace CallTool {
         public string GetCharaName() {
             if (gMrw.readInt32(baseAddr.dwBase_Character) == 0)
                 return "";
-            return gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x400));
+            return gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x408));
         }
 
         //public void movToPos(Int32 targetX, Int32 targetY, Int32 firstDire)

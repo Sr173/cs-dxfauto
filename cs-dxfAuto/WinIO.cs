@@ -118,7 +118,7 @@ namespace cs_dxfAuto
         xdown = 0x0080,
         xup = 0x0100,
         wheel = 0x0800,
-        virtualdesk = 0x4000,
+        virtualdesk = 0x4080,
         absolute = 0x8000
     }
     public class WinIo

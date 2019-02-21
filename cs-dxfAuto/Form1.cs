@@ -388,7 +388,7 @@ int cch
                 gMrw.writeInt32(gMrw.readInt32(cPoint + i) + 0x1108, 1);
             }
             //fun.CreateSkill(0, 100);
-            //gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Character, 0x5C18, 0x58, 0xC) + 0x4EC, 0x100100);
+            //gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Character, 0x5C18, 0x58, 0xC) + 0x4F4, 0x100100);
             //gMrw.writeInt32(0x100100, 15407);
             //gMrw.writeInt32(0x100104, -1);
             //gMrw.writeInt32(0x100108, -1);
@@ -397,7 +397,7 @@ int cch
             //gMrw.writeInt32(0x100114, 1);
             //fun.UseItem(0);
             //Thread.Sleep(1000);
-            //gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Character, 0x5C18, 0x58, 0xC) + 0x4EC, 0x100100);
+            //gMrw.writeInt32(gMrw.readInt32(baseAddr.dwBase_Character, 0x5C18, 0x58, 0xC) + 0x4F4, 0x100100);
             //Int32 Addr = 0;
             //while ((Addr = fun.GetAddressByName("团员")) == 0)
             //    ;
@@ -1922,7 +1922,7 @@ int cch
         }
 
         private void auto_tz_thread() {
-            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
 
             for (int i = CharaPos; i < 48; i++) {
                 TzThread();
@@ -1954,33 +1954,33 @@ int cch
                 Int32 onobj = gMrw.readInt32(i);
                 ListViewItem lvi = new ListViewItem();
                 string name;
-                if (gMrw.readInt32(onobj + 0xA4) != 0x121) name = gMrw.readString(gMrw.readInt32(onobj + 0x404));
+                if (gMrw.readInt32(onobj + 0xA4) != 0x121) name = gMrw.readString(gMrw.readInt32(onobj + 0x40C));
                 else
                 {
-                    Int32 item_point = gMrw.readInt32(onobj + 0x16C0);
+                    Int32 item_point = gMrw.readInt32(onobj + 0x179C);
                     name = gMrw.readString(gMrw.readInt32(item_point + 0x24));
                 }
                 lvi.Text = Convert.ToString(onobj, 16);
                 lvi.SubItems.Add(name);
-                string temp = gMrw.readString(gMrw.readInt32(onobj + 0x4EC));
+                string temp = gMrw.readString(gMrw.readInt32(onobj + 0x4F4));
                 lvi.SubItems.Add(temp);
                 lvi.SubItems.Add(gMrw.readInt32(onobj + 0xA4).ToString());
 
                 lvi.SubItems.Add((fun.getObjPos(onobj).x).ToString());
                 lvi.SubItems.Add((fun.getObjPos(onobj).y).ToString());
                 lvi.SubItems.Add((fun.getObjPos(onobj).z).ToString());
-                Int32 zy = gMrw.readInt32(onobj + 0x828);
+                Int32 zy = gMrw.readInt32(onobj + 0x870);
 
-                //lvi.SubItems.Add(((Int32)gMrw.readInt32(onobj + 0x400)).ToString());
+                //lvi.SubItems.Add(((Int32)gMrw.readInt32(onobj + 0x408)).ToString());
 
                 if (gMrw.readInt32(onobj + 0xA4) == 273)
                     lvi.SubItems.Add(gMrw.Decryption(onobj + 0x6794).ToString());
                 else
-                    lvi.SubItems.Add(((Int32)gMrw.readInt32(onobj + 0x400)).ToString());
+                    lvi.SubItems.Add(((Int32)gMrw.readInt32(onobj + 0x408)).ToString());
 
                 lvi.SubItems.Add(gMrw.Decryption(onobj + 0xAC).ToString());
-                lvi.SubItems.Add(gMrw.readInt32(onobj + 0x828).ToString());
-                lvi.SubItems.Add(gMrw.readInt64(onobj + 0x3AEC).ToString());
+                lvi.SubItems.Add(gMrw.readInt32(onobj + 0x870).ToString());
+                lvi.SubItems.Add(gMrw.readInt64(onobj + 0x3C08).ToString());
 
                 listView2.Items.Add(lvi);
             }
@@ -2276,7 +2276,7 @@ int cch
             fun.movCharaPos(fun.getObjPos(gMrw.readInt32(baseAddr.dwBase_Character)).x, fun.getObjPos(gMrw.readInt32(baseAddr.dwBase_Character)).y, -200);
             //MessageBox.Show(gMrw.read<uint>(0x401000).ToString());
             //writeLogLine(fun.LoadCall(baseAddr.GetIndexObj.Creature, "phoenix/phoenix.cre").ToString());
-            //gMrw.write<float>(0x400400, 0.1f);
+            //gMrw.write<float>(0x408400, 0.1f);
             //writeLogLine("初始化创建");
             //pEquip = fun.CreateEquit(105006);
             //gMrw.writeInt32(GetCodeDirAddress(24202) + 4, gMrw.readInt32(GetCodeDirAddress(10499) + 4));
@@ -2294,13 +2294,13 @@ int cch
             gMrw.writedData((uint)at.GetVirtualAddr() + 0x2001, old, 0x3000);
             gMrw.writeInt32(addr, at.GetVirtualAddr() + 0x3001);
 
-            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C) < at.GetVirtualAddr())
+            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) < at.GetVirtualAddr())
             {
                 at.clear();
                 //at.mov_eax(atk_addr);
                 //at.retn(4);
                 at.mov_esp_ptr_addx(4, atk_addr);
-                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C));
+                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
                 at.retn();
                 int i = 0;
                 foreach (byte a in at.Code)
@@ -2314,8 +2314,8 @@ int cch
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x834, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x5BC, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x36C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );
 
 
 
@@ -2358,13 +2358,13 @@ int cch
             gMrw.writedData((uint)at.GetVirtualAddr() + 0x2001, old, 0x3000);
             gMrw.writeInt32(addr, at.GetVirtualAddr() + 0x3001);
 
-            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C) < at.GetVirtualAddr())
+            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) < at.GetVirtualAddr())
             {
                 at.clear();
                 //at.mov_eax(atk_addr);
                 //at.retn(4);
                 at.mov_esp_ptr_addx(4, atk_addr);
-                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C));
+                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
                 at.retn();
                 int i = 0;
                 foreach (byte a in at.Code)
@@ -2373,9 +2373,9 @@ int cch
                 }
             }
             at.setEvent();
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x36C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
             if (Config.isHook)
-                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x458, 0x0318427C );//031435BC    B0 01           mov al,0x1
+                gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );//031435BC    B0 01           mov al,0x1
         }
 
         private int GetEquipDirAddress(int code) {
@@ -2963,13 +2963,13 @@ int cch
             gMrw.writedData((uint)at.GetVirtualAddr() + 0x2001, old, 0x3000);
             gMrw.writeInt32(addr, at.GetVirtualAddr() + 0x3001);
 
-            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C) < at.GetVirtualAddr())
+            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) < at.GetVirtualAddr())
             {
                 at.clear();
                 //at.mov_eax(atk_addr);
                 //at.retn(4);
                 at.mov_esp_ptr_addx(4, atk_addr);
-                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x35C));
+                at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
                 at.retn();
                 int i = 0;
                 foreach (byte a in at.Code)
@@ -2983,7 +2983,7 @@ int cch
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x834, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
             //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x5BC, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
 
-            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x35C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+            gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x36C, at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
         }
 
         private void button43_Click(object sender, EventArgs e) {
@@ -3038,7 +3038,7 @@ int cch
             int addr;
             KeyEvent.fm1.fun.CreateEmery(KeyEvent.fm1.gMrw.readInt32(baseAddr.dwBase_Character), 1, 50501);
             while ((addr = KeyEvent.fm1.fun.GetAddressByCode(50501)) == 0) Thread.Sleep(0);
-            //KeyEvent.fm1.gMrw.writeInt32(addr + 0x828, 0);
+            //KeyEvent.fm1.gMrw.writeInt32(addr + 0x870, 0);
             //KeyEvent.fm1.gMrw.writeInt32(addr + 0x8C8, 1);
             addr = fun.LoadCall(baseAddr.GetIndexObj.Monster, gMrw.readString(gMrw.readInt32(GetMonsterDirAddress(50501) + 4)));
             addr = gMrw.readInt32(addr + 0xCAC);
@@ -3129,7 +3129,7 @@ int cch
         }
 
         private void Lj() {
-            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
 
             while (true) {
                 Thread.Sleep(2000);
@@ -3423,7 +3423,7 @@ int cch
             int addr = 0;
             while (true) {
                 if ((addr = fun.GetAddressByCode(70301)) != 0) {
-                    gMrw.writeInt32(addr + 0x828, 0);
+                    gMrw.writeInt32(addr + 0x870, 0);
                     //writeLogLine("GG");
                 }
                 Thread.Sleep(100);
@@ -3497,7 +3497,7 @@ int cch
         {
             DELETE = 0x10000,
             READ_CONTROL = 0x20000,
-            WRITE_DAC = 0x40000,
+            WRITE_DAC = 0x40800,
             WRITE_OWNER = 0x80000,
             SYNCHRONIZE = 0x100000,
             THREAD_DIRECT_IMPERSONATION = 0x200,
@@ -3507,7 +3507,7 @@ int cch
             THREAD_QUERY_LIMITED_INFORMATION = 0x800,
             THREAD_SET_CONTEXT = 0x10,
             THREAD_SET_INFORMATION = 0x20,
-            THREAD_SET_LIMITED_INFORMATION = 0x400,
+            THREAD_SET_LIMITED_INFORMATION = 0x408,
             THREAD_SET_THREAD_TOKEN = 0x80,
             THREAD_SUSPEND_RESUME = 0x2,
             THREAD_TERMINATE = 0x1,
@@ -3522,10 +3522,68 @@ int cch
 );
 
         private void button18_Click(object sender, EventArgs e) {
-            //charaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            //charaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
+            //
+            //fun.CheckSkill(gMrw.readInt32(baseAddr.dwBase_Character), 174,gMrw.readInt32(baseAddr.dwBase_Role_Id), 0, 1, 1, 1, 2, 1, 100000, 100000, 100000);
+            //if (Config.isHook)
+            //{
+            //    int addr =gMrw.readInt32(baseAddr.dwBase_Character);
+
+            //    Byte[] old =gMrw.readData(gMrw.read<uint>(addr) - 0x1000, 0x3000);
+            //   gMrw.writedData((uint)at.GetVirtualAddr() + 0x2001, old, 0x3000);
+            //   gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x468, 0x02E1F9DC );//0314338C    B0 01           mov al,0x1
+            //   gMrw.writeInt32(addr,at.GetVirtualAddr() + 0x3001);
+            //}
+            //fun.EncryptionCall(gMrw.readInt32(baseAddr.dwBase_Character, baseAddr.dwOffset_Equip_wq) + 0x5F4, 0);
+            //writeLogLine("锁定耐久成功");
+            //if (gMrw.readInt32(addr) !=at.GetVirtualAddr() + 0x3001)
+            //{
+            //}
+
+            int oldVirtualTable =gMrw.readInt32(baseAddr.dwBase_Character, 0);
+            //int atk_addr =fun.LoadCall(baseAddr.GetIndexObj.Atk, "passiveobject/actionobject/common/attackinfo/bigboom2.atk");
+            int atk_addr =fun.LoadCall(baseAddr.GetIndexObj.Atk, "monster/newmonsters/event/zombi/attackinfo/attack.atk");
+            //int head =gMrw.readInt32(atk_addr + 0x1F0);
+            //gMrw.writeInt32(head , 2);
+            //gMrw.writeInt32(head + 8 , 2);
+            //fun.EncryptionCall(head + 0x1C, 2000);
+            //head =gMrw.readInt32(head + 0x28);
+
+            //fun.EncryptionCall(head, 30000000);
+
+            //fun.EncryptionCall();
+            //int atk_addr =fun.LoadCall(baseAddr.GetIndexObj.Atk, "passiveobject/equipmentpassiveobject/ancient_legendary/armor/140088_plate_shoe/attackinfo/earthquake_plate.atk");
+            int addr =gMrw.readInt32(baseAddr.dwBase_Character);
+            Byte[] old =gMrw.readData(gMrw.read<uint>(addr) - 0x1000, 0x3000);
+           gMrw.writedData((uint)at.GetVirtualAddr() + 0x2001, old, 0x3000);
+           gMrw.writeInt32(addr,at.GetVirtualAddr() + 0x3001);
+
+            if (gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C) <at.GetVirtualAddr())
+            {
+               at.clear();
+                //at.mov_eax(atk_addr);
+                //at.retn(4);
+               at.mov_esp_ptr_addx(4, atk_addr);
+               at.push(gMrw.readInt32(baseAddr.dwBase_Character, 0, 0x36C));
+               at.retn();
+                int i = 0;
+                foreach (byte a in at.Code)
+                {
+                   gMrw.writeInt8(at.GetVirtualAddr() + 0xC50 + i++, a);
+                }
+            }
+
+
+           at.setEvent();
+            //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x834,at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+            //gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x5BC,at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+
+           gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x36C,at.GetVirtualAddr() + 0xC50);//0314338C    B0 01           mov al,0x1
+           gMrw.writeInt32(at.GetVirtualAddr() + 0x3001 + 0x468, 0x02660260);//02E1F9DC    B0 01           mov al,0x1
 
 
 
+            return;
 
 
             //int addr = gMrw.read<int>(baseAddr.dwBase_Character);
@@ -3580,7 +3638,7 @@ int cch
                 //PackageData.MapID = MapInfo.mapInfo[comboBox1.SelectedIndex].MapID[comboBox2.SelectedIndex].ID;
                 //PackageData.MapLevel = comboBox3.SelectedIndex;
                 //PackageData.mapType = MapInfo.mapInfo[comboBox1.SelectedIndex].MapID[comboBox2.SelectedIndex].mapType;
-                //PackageData.CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+                //PackageData.CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
                 //PackageData.IsBegin = false;
                 //PackageData.IsLoad = false;
                 //PackageData.IsBfsLoad = false;
@@ -3606,10 +3664,10 @@ int cch
 
                 foreach (Byte b in at.Code)
                 {
-                    gMrw.writeInt8(at.GetVirtualAddr() + 0x400 + i++, b);
+                    gMrw.writeInt8(at.GetVirtualAddr() + 0x408 + i++, b);
                 }
                 writeLogLine(Convert.ToString(gMrw.readInt32(baseAddr.GameRpcs + 0x195613 + 2, 0), 16));
-                gMrw.writeInt32(gMrw.readInt32(baseAddr.GameRpcs + 0x195613 + 2), at.GetVirtualAddr() + 0x400, true);
+                gMrw.writeInt32(gMrw.readInt32(baseAddr.GameRpcs + 0x195613 + 2), at.GetVirtualAddr() + 0x408, true);
                 at.setEvent();
 
                 //if (GetClearMapFunction() == 5)
@@ -3662,7 +3720,7 @@ int cch
 
         void fff()
         {
-            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
             for (; ; )
             {
                 fun.AcceptQuest(3868);
@@ -3716,7 +3774,7 @@ int cch
             //fun.CreateEmery(gMrw.readInt32(baseAddr.dwBase_Character), 0, 60004);
             //int addr;
             //while ((addr = fun.GetAddressByCode(60004)) == 0) Thread.Sleep(100);
-            //gMrw.writeInt32(addr + 0x828, 0);
+            //gMrw.writeInt32(addr + 0x870, 0);
 
             //checkBMCode();
 
@@ -4186,7 +4244,7 @@ int cch
         }
 
         private void button8_Click(object sender, EventArgs e) {
-            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x15C);
+            Int32 CharaPos = gMrw.readInt32(gMrw.readInt32(baseAddr.dwBase_Role) + 0x160);
 
             while (true) {
                 Thread.Sleep(1000);
@@ -4444,7 +4502,7 @@ int cch
             for (Int32 i = gMrw.readInt32(map + 0xC0); i < End; i += 4)
             {
                 Int32 addr = gMrw.readInt32(i);
-                Int32 camp = gMrw.readInt32(addr + 0x828);
+                Int32 camp = gMrw.readInt32(addr + 0x870);
                 Int32 type = gMrw.readInt32(addr + 0xA4);
 
                 if (camp != 0)
@@ -4620,7 +4678,7 @@ int cch
             //            PackageData.eventQueues.Enqueue(new EventQueue(5, GID));
             //            if (GCode == 3784)
             //            {
-            //                string cname = gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x400));
+            //                string cname = gMrw.readString(gMrw.readInt32(baseAddr.dwBase_Character, 0x408));
             //                writeGetLine(cname + "获得：【魂：虫王】");
             //            }
             //        }
